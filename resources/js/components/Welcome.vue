@@ -8,7 +8,7 @@
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="sass.html">Home</a></li>
                     <li><a href="collapsible.html">About</a></li>
-                    <li><a href="/auth/signup" class="btn purple darken-1">Login</a></li>
+                    <li><a href="/auth/login" class="btn purple darken-1">Login</a></li>
                 </ul>
             </div>
         </nav>

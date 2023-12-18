@@ -55,3 +55,5 @@ Route::prefix('auth')->group(function () {
 Route::get('/onboarding/choose-domain-n-email', function() {
     return view('onboarding.choose-domain');
 })->middleware(['auth']);
+
+Route::post('tenant_make', [App\Http\Controllers\TenantController::class, 'create']);

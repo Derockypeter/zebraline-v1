@@ -9,7 +9,7 @@
         </nav>
 
         <div class="center">
-            <h1 class="header">Sign Up</h1>
+            <h1 class="header">Sign In</h1>
             <small>Don't have an account yet? <a href="/auth/signup" class="purple-text darken-1">Sign up</a></small>
         </div>
         <div class="row">

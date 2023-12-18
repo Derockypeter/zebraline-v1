@@ -99,7 +99,7 @@ class AuthService
                 $user->notify(new SignupActivate($newUser));
                 // Temporal token
                 auth()->login($newUser);
-                return ['user' => $newUser, 'status' => 201, 'redirectUrl' => 'onboarding/choose-domain-n-email'];
+                return ['user' => $newUser, 'status' => 201, 'redirectUrl' => '/onboarding/choose-domain-n-email'];
             } else {
                 return ['Creation error', 'status' => 400];
             }
