@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Tenants;
+namespace App\Http\Controllers\Tenant;
 
+use App\Models\Tenant;
 use Illuminate\Http\Request;
-use App\Models\MetaSEO\Tenants;
-use App\Models\Tenants\MetaSEO;
+use App\Models\Tenant\MetaSEO;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Config;
 
 class MetaSEOController extends Controller
 {
@@ -41,25 +43,22 @@ class MetaSEOController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string'],
-            'image' => ['required'],
-            'description' => ['nullable', 'string'],
+            'description' => ['required', 'string'],
+            'keyword' => ['required', 'string'],
         ]);
+        $userId = auth()->user()->id;
+        $tenants = new Tenant();
+        $tenant = $tenants->where('user_id', $userId)->first();
+        $tenantDb =$tenant->tenancy_db_name;
+        Config::set('database.connections.mysql.database', $tenantDb);
 
-        $name = $this->stripSpecialChars("meta_image").'.png';
-        $save_path = public_path() . '/media/tenants/' . strtolower(tenant('id')) . '/img/meta/';
-
-        if (!file_exists($save_path)) {
-            mkdir($save_path, 0755, true);
-        }
-
-        $file = $save_path . $name;
-
-        Image::make(file_get_contents($request->image))->fit(1200, 630, function ($constraint) {})->save($file);
+        DB::connection('mysql')->reconnect();
+        DB::setDatabaseName($tenantDb);
 
         $meta = MetaSEO::create([
             'title' => $request->title,
             'description' => $request->description,
-            'image' => '/media/tenants/' . strtolower(tenant('id')) . '/img/meta/' . $name,
+            'keyword' => $request->keyword,
         ]);
 
         return response()->json(['message' => 'New Meta added.', 'meta' => $meta], 201);

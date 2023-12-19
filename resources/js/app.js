@@ -33,6 +33,9 @@ app.component('dashboard-component', DashboardComponent);
 import DesignComponent from './components/Client/Design.vue';
 app.component('design-component', DesignComponent);
 
+import ProductComponent from './components/Client/Product.vue';
+app.component('product-component', ProductComponent);
+
 import Onboarding from './components/Onboarding/Onboarding.vue';
 app.component('onboarding-component', Onboarding);
 

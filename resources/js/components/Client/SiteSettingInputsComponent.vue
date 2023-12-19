@@ -78,17 +78,16 @@
                         </select>
                     </div>
 
-                    <div class="input-field col s12">
-                        <input type="text" v-model="major">
-                        <label class="active" for="first_name2">What do you plan to sell?</label>
-                    </div>
+                   
                 </div>
             </div>
             <div class="col l6">
-                <SEOInputComponent :brand="brand" :country="site.country" :state="site.state" :whatyousell="major" />
+                <SEOInputComponent :brand="brand" :country="site.country" :state="site.state" @seoContent="seoContent"/>
             </div>
         </div>
-        <button class="btn purple darken-2" @click.prevent="saveDetailForSiteData">Next</button>
+        <div class="flex">
+            <button class="btn purple darken-2 center" @click.prevent="saveDetailForSiteData">Save n continue</button>
+        </div>
     </div>
 </template>
 <script>
@@ -107,9 +106,9 @@ export default {
                 state: "",
                 timezone: "",
             },
-            major: "",
             countries: [],
             cities: [],
+            localMeta: "",
         }
     },
     props: {
@@ -117,6 +116,7 @@ export default {
     },
     mixins: [fetchData],
     methods: {
+        
         async fetchCountries() {
             try {
                 const response = await this.fetchData(
@@ -138,6 +138,10 @@ export default {
             }
         },
 
+        seoContent(evt) {
+            this.localmeta = evt;
+        },
+
         getCities() {
             let cities = this.countries.find(
                 (country) => country.country == this.site.country
@@ -146,23 +150,55 @@ export default {
         },
         async saveDetailForSiteData() {
             try {
-                let formData = new FormData();
-                formData.append('name', this.branding.name);
-                formData.append('logo', this.branding.logo);
-                formData.append('favicon', this.branding.favicon)
-                const response = await this.fetchData('/favicon_logo', 2, 'post', formData);
+                const response = await this.fetchData('/other_settings', 2, 'post', this.site);
+                if (response.status === 200) {
+                    this.saveMeta();
+                }
 
                 console.log(response);
 
-                this.$emit('handleView', 2);
                 
             } catch (error) {
                 
             }
-        }
+        },
+        async saveMeta() {
+            let formData = new FormData();
+            formData.append("description", this.localmeta.description);
+            formData.append("title", this.localmeta.title);
+            formData.append("keyword", this.localmeta.keyword);
+
+            try {
+                const response = await this.fetchData(
+                    "/meta_data",
+                    3,
+                    "post",
+                    formData
+                );
+                if (response.status === 201) {
+                    this.processing = false;
+                    M.toast({
+                        success: 'green',
+                        html: 'Saved Data'
+                    });
+                    location.href = '/client/product';
+                }
+            } catch (err) {
+                M.toast({
+                    html: `${err}`,
+                    classes: "errorNotifier",
+                });
+            }
+        },
     },
     mounted() {
         this.fetchCountries();
     },
 }
 </script>
+<style scoped>
+.flex {
+    display: flex;
+    justify-content: center;
+}
+</style>

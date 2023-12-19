@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Tenant\SitedataController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\Tenant\MetaSEOController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,9 +38,18 @@ Route::get('/', function () {
         }
     });
 
+
+Route::get('/onboarding/choose-domain-n-email', function() {
+    return view('onboarding');
+})->middleware(['auth']);
+
 Route::get('/client/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/client/product', function () {
+    return view('client.product');
+})->middleware(['auth'])->name('product');
 
 Route::get('/client/design', function () {
     return view('client.design');
@@ -57,9 +67,6 @@ Route::prefix('auth')->group(function () {
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
 });
 
-Route::get('/onboarding/choose-domain-n-email', function() {
-    return view('onboarding');
-})->middleware(['auth']);
 
 Route::post('tenant_make', [App\Http\Controllers\TenantController::class, 'create']);
 Route::post('create_template_ids', [App\Http\Controllers\TenantController::class, 'createComponentsForTenant']);
@@ -67,6 +74,7 @@ Route::get('getdomainName', [App\Http\Controllers\TenantController::class, 'getd
 Route::post('font_color', [SiteDataController::class, 'storeFontColor']);
 Route::post('favicon_logo', [SiteDataController::class, 'storeFaviconLogo']);
 Route::post('other_settings', [SiteDataController::class, 'storeOthers']);
+Route::post('meta_data', [MetaSEOController::class, 'store']);
 
 
 

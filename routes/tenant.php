@@ -28,5 +28,5 @@ Route::middleware([
         return $request->user();
     });
 
-    Route::get('/', [App\Http\Controllers\TenantController::class, 'template']);
+    Route::get('/mysite', [App\Http\Controllers\TenantController::class, 'template']);
 });

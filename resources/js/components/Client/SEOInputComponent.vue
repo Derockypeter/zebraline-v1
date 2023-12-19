@@ -4,50 +4,82 @@
         <form action="">
             <div class="row">
                 <div class="input-field col s12">
-                    <textarea class="materialize-textarea" v-model="seo.description"></textarea>
-                    <label for="">SEO Description</label>
+                    <input type="text" v-model="whatyousell" @keyup="handleTyping">
+                    <label class="active" for="first_name2">What do you plan to sell?</label>
+                </div>
+                <div v-if="checkingGPT">
+                    <i class="fa fa-spinner fa-spin right" />
+                    <span class="right">Loading AI generated SEO</span>
                 </div>
             </div>
             <div class="row">
+                <p for="">SEO Description</p>
                 <div class="input-field col s12">
-                    <input type="text" class="validate" v-model="seo.title">
-                    <label for="">SEO Title</label>
+                    <textarea class="materialize-textarea" v-model="seo.description"></textarea>
                 </div>
             </div>
+            <div class="row">
+                <p for="">SEO Keyword</p>
+                <div class="input-field col s12">
+                    <textarea class="materialize-textarea" v-model="seo.keyword"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <p for="">SEO Title</p>
+                <div class="input-field col s12">
+                    <input type="text" class="validate" v-model="seo.title">
+                </div>
+            </div>
+            <small v-if="seo.description !== ''">You can edit the content generated or click on next to continue</small>
         </form>
     </div>
 </template>
 <script>
 import OpenAI from 'openai';
-const key = import.meta.env.VITE_OPENAI_KEY;
+const key = import.meta.env.VITE_OPENAI_API_KEY;
 const openai = new OpenAI({
     apiKey: key,
     dangerouslyAllowBrowser: true
 });
+const titleRegex = /Title: "(.*?)"/;
+const keywordsRegex = /Keywords: "(.*?)"/;
+const descriptionRegex = /Description: "(.*?)"/;
 export default {
     data() {
         return {
             seo: {
                 title: "",
                 description: "",
+                keyword: "",
             },
             checkingGPT: false,
             suggestion: "",
-            // key: import.meta.env.VITE_OPENAI_KEY,
+            typingTimer: null,
+            doneTypingInterval: 2000,
+            whatyousell: ""
         }
     },
     props: {
         state: String,
         country: String,
         brand: String,
-        whatyousell: String,
     },
     methods: {
+        handleTyping() {
+            clearTimeout(this.typingTimer);
+            this.typingTimer = setTimeout(() => {
+                this.userStoppedTyping();
+            }, this.doneTypingInterval);
+        },
+        userStoppedTyping() {
+            this.mkReqToGPT();
+        },
         async mkReqToGPT() {
             
             // let product = 'Kitchen Appliances'; 
             // let location = "Atlanta, USA";
             // let domainName = "Cook Fun";
+            this.checkingGPT = true;
             let product = this.whatyousell;
             let location = `${this.state}, ${this.country}`;
             let domainName = this.brand;
@@ -64,43 +96,25 @@ export default {
                 ],
             });
 
-            console.log(chatCompletion.choices[0].message);
+            // console.log(chatCompletion.choices[0].message.content);
+            let content = chatCompletion.choices[0].message.content;
+            console.log(content);
+            this.content(content);
+            this.checkingGPT = false;
         },
-        async saveMeta() {
-            let formData = new FormData();
-            formData.append("description", this.localmeta.description);
-            formData.append("title", this.localmeta.title);
-            try {
-                const response = await this.fetchData(
-                    "/api/meta_data",
-                    3,
-                    "post",
-                    formData
-                );
-                if (response.status === 201) {
-                    this.processing = false;
-                    document.getElementById("onSuccessShow").innerText =
-                        "Successfully Saved!";
-                    setTimeout(() => {
-                        document.getElementById("onSuccessShow").innerText = "";
-                    }, 2000);
-                }
-            } catch (err) {
-                M.toast({
-                    html: `${err}`,
-                    classes: "errorNotifier",
-                });
-            }
+        extractContent(regex, inputText) {
+            const match = inputText.match(regex);
+            return match ? match[1] : '';
         },
+        content(text) {
+            this.seo.title = this.extractContent(titleRegex, text);
+            this.seo.keyword = this.extractContent(keywordsRegex, text);
+            this.seo.description = this.extractContent(descriptionRegex, text);
+            console.log(this.seo, keywordsRegex, descriptionRegex, titleRegex);
+            this.$emit('seoContent', this.seo);
+        },
+        
 
     },
-    watch: {
-        whatyousell(newVal) {
-            console.log(newVal);
-            if (newVal.length > 3) {
-                this.mkReqToGPT()
-            }
-        }
-    }
 }
 </script>
