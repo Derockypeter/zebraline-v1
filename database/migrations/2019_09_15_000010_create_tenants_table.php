@@ -20,6 +20,7 @@ class CreateTenantsTable extends Migration
 
             $table->bigInteger('user_id')->unsigned();
             $table->json('site_data')->nullable();
+            $table->json('data')->nullable();
             $table->string('domainName')->nullable();
             $table->string('customEmail')->nullable();
             $table->enum('domainConnect', [1, 0])->default(0);

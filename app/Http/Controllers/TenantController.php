@@ -82,7 +82,6 @@ class TenantController extends Controller
             "reviewsTemplateId" => 'required|integer',
             "sellingPointTemplateId" => 'required|integer',
             "footerPointTemplateId" => 'required|integer',
-            'tenant_db' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -91,7 +90,10 @@ class TenantController extends Controller
 
         try {
             $inputs = $validator->validated();
-            $tenantDb = $inputs['tenant_db'];
+            $userId = auth()->user()->id;
+            $tenants = new Tenant();
+            $tenant = $tenants->where('user_id', $userId)->first();
+            $tenantDb =$tenant->tenancy_db_name;
             Config::set('database.connections.mysql.database', $tenantDb);
 
             DB::connection('mysql')->reconnect();
@@ -132,12 +134,18 @@ class TenantController extends Controller
         }
     }
 
+    public function getdomainName() {
+        if (auth()->check()) {
+            $tenant = Tenant::where('user_id', auth()->user()->id)->first();
+
+            return response()->json(['message' => 'Success!', 'domain' => $tenant->domains[0]->domain]);
+        }
+    }
+
     // Helper method to validate the request data
     private function validateRequest(Request $request)
     {
         return Validator::make($request->all(), [
-            // 'site_data' => 'nullable|json',
-            // 'storetype_id' => 'nullable',
             'domain' => 'required',
             'customEmail' => 'required',
             'domainConnect' => 'required'
@@ -190,9 +198,9 @@ class TenantController extends Controller
         $review_tempId = $templatesToRend->review_tempId;
         $footer_tempId = $templatesToRend->footer_tempId;
         $data = json_decode($tenant->site_data);
-        $theme_color = $data->themeColor;
-        $brand_name = $data->brandName;
-        $brandDesc = $data->brandDesc;
+        // $theme_color = $data->themeColor;
+        // $brand_name = $data->brandName;
+        // $brandDesc = $data->brandDesc;
         $storeTypeId = $tenant->storetype_id;
         // $metaData = MetaSEO::first();
         $email = DB::connection('mysql')->table('users')->where('id', tenant()->user_id)->first('email');
@@ -201,7 +209,7 @@ class TenantController extends Controller
         }
         // // Checks if  a user is subscribed
         // $userSubscribed = $tenant->user->subscribed('premium');
-        return view('websites.renderer', compact('review_tempId', 'footer_tempId', 'sellin_point_tempId', 'offer_tempId', 'hero_tempId', 'category_tempId', 'featured_tempId', 'blog_tempId', 'navbar_tempId', 'theme_color', 'brand_name', 'email', 'brandDesc', 'metaData', 'storeTypeId'));
+        return view('websites.renderer', compact('review_tempId', 'footer_tempId', 'sellin_point_tempId', 'offer_tempId', 'hero_tempId', 'category_tempId', 'featured_tempId', 'blog_tempId', 'navbar_tempId', 'email', 'storeTypeId')); // , 'metaData'
 
     }
 

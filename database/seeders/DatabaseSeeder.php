@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Theme;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +19,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        Theme::create(["title" => "Stripe", "description" => 'Bring simplicity to your shop with this easy scrolling layout.', 'imageUrl' => '/media/templateSnaps/TEMPLATEFAHSIONWER.png',]);
+        Theme::create(["title" => "Trellis", "description" => 'Nice and clean and best for shops organized by collection.', 'imageUrl' => '/media/templateSnaps/TEMPLATEFAHSIONWER.png',]);
+        Theme::create(["title" => "Chevron", "description" => 'Center your homepage around your shop and its story.', 'imageUrl' => '/media/templateSnaps/TEMPLATEFAHSIONWER.png',]);
     }
 }

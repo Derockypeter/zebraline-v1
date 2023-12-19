@@ -6,6 +6,8 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { defineAsyncComponent } from "vue";
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -28,8 +30,21 @@ app.component('login-component', LoginComponent);
 import DashboardComponent from './components/Client/Dashboard.vue';
 app.component('dashboard-component', DashboardComponent);
 
-import DomainEmailComponent from './components/Onboarding/DomainEmailComponent.vue';
-app.component('domain_email-component', DomainEmailComponent);
+import DesignComponent from './components/Client/Design.vue';
+app.component('design-component', DesignComponent);
+
+import Onboarding from './components/Onboarding/Onboarding.vue';
+app.component('onboarding-component', Onboarding);
+
+let checkTenantRenderer = document.getElementById('app').getAttribute('data-renederer-prop');
+if (checkTenantRenderer !== null) {
+    app.component(`renderer-website-component`, defineAsyncComponent(() => import(`./components/Websites/Index.vue`)));
+    const pinia = createPinia();
+    app.use(pinia)
+    // app.use(router);
+    // app.use(metaManager)
+    // app.use(metaPlugin)
+}
 
 /**
  * The following block of code may be used to automatically register your

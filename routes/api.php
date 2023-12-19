@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DomainCheckerController;
+use App\Http\Controllers\ThemeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,7 @@ Route::post('/save_n_send_otp', [AuthController::class, 'savenSendOtp']);
 
 Route::get('/checklocaldomain', [DomainCheckerController::class, 'checkLocalDomain']);
 Route::post('domain/check', [DomainCheckerController::class, 'check']);
+
+Route::get('theme', [ThemeController::class, 'index']);
+
+

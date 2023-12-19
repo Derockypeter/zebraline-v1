@@ -138,13 +138,10 @@
                 }
             },
             checkDomainAvailability(event) {
-                this.domainCheckPassed = false
-                this.$emit('domainCheck', this.domainCheckPassed);
                 // Check if the Backspace key was pressed
                 if (event.keyCode === 8 || event.key === "Backspace") {
                     // Handle Backspace key event
                     // For example, clear the domain input value or perform any other desired action
-                    this.domainCheckPassed = false;
                     return;
                 }
 
@@ -181,18 +178,13 @@
                                         });
                                 } else if (res.data.passed === 0) {
                                     this.checkingSuggestion = false;
-                                    this.domainCheckPassed = false;
-                                    this.$emit("status", false);
                                 }
                             })
                             .catch((err) => {
                                 console.log(err);
                                 this.checkingSuggestion = false;
                             });
-                    } else {
-                        this.domainCheckPassed = null;
-                    }
-                    // this.removeLabel(el);
+                    } 
                 }, 1000);
             },
             mounted() {
