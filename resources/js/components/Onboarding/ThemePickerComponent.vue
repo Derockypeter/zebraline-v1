@@ -81,10 +81,8 @@ export default {
     .cursor {
         cursor: pointer;
     }
-    .cursor:hover {
-        box-shadow: 1px 1px inset;
-    }
-    .selected {
-        box-shadow: 1px 1px inset;
+    .cursor:hover, .selected {
+        border: 0.3rem solid black;
+        padding: 2vh;
     }
 </style>
