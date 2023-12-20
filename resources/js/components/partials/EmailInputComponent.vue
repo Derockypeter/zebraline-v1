@@ -59,7 +59,7 @@
                 }
             },
             prefillInput(suggestion) {
-                this.customEmail = `${suggestion}@${this.domain}`;
+                this.customEmail = `${suggestion}`;
             }
         },
         props: {
