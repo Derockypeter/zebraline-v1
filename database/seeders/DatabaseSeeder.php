@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Theme::create(["title" => "Stripe", "description" => 'Bring simplicity to your shop with this easy scrolling layout.', 'imageUrl' => '/media/templateSnaps/TEMPLATEFAHSIONWER.png',]);
-        Theme::create(["title" => "Trellis", "description" => 'Nice and clean and best for shops organized by collection.', 'imageUrl' => '/media/templateSnaps/TEMPLATEFAHSIONWER.png',]);
-        Theme::create(["title" => "Chevron", "description" => 'Center your homepage around your shop and its story.', 'imageUrl' => '/media/templateSnaps/TEMPLATEFAHSIONWER.png',]);
+        Theme::create(["title" => "Stripe", "description" => 'Bring simplicity to your shop with this easy scrolling layout.', 'imageUrl' => '/media/templateSnaps/ariseTemplate.png',]);
+        Theme::create(["title" => "Trellis", "description" => 'Nice and clean and best for shops organized by collection.', 'imageUrl' => '/media/templateSnaps/clayTemplate.png',]);
+        Theme::create(["title" => "Chevron", "description" => 'Center your homepage around your shop and its story.', 'imageUrl' => '/media/templateSnaps/reneTemplate.png',]);
     }
 }

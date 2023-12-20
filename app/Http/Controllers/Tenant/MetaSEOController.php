@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Tenant\MetaSEO;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Config;
 

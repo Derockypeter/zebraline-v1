@@ -1,9 +1,13 @@
 <?php
 
-use App\Http\Controllers\Tenant\SitedataController;
-use App\Http\Controllers\SocialiteController;
-use App\Http\Controllers\Tenant\MetaSEOController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialiteController;
+
+
+use App\Http\Controllers\Tenant\ImageController;
+use App\Http\Controllers\Tenant\MetaSEOController;
+use App\Http\Controllers\Tenant\ProductController;
+use App\Http\Controllers\Tenant\SitedataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +79,12 @@ Route::post('font_color', [SiteDataController::class, 'storeFontColor']);
 Route::post('favicon_logo', [SiteDataController::class, 'storeFaviconLogo']);
 Route::post('other_settings', [SiteDataController::class, 'storeOthers']);
 Route::post('meta_data', [MetaSEOController::class, 'store']);
+
+Route::post('/product', [ProductController::class, 'store']);
+Route::put('/product/{id}', [ProductController::class, 'update']);
+Route::get('/product', [ProductController::class, 'index']);
+Route::post('/unlink_img', [ImageController::class, 'unlinkImage']);
+
 
 
 

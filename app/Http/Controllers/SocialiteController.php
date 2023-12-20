@@ -30,7 +30,6 @@ class SocialiteController extends Controller
 
                 // Because we're using stateless, reconsider
                 Auth::login($newUser);
-
                 return redirect()->intended('/onboarding/choose-domain-n-email');
             } elseif ($user) {
                 Auth::login($user);
