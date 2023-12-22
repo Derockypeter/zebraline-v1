@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DomainCheckerController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\DomainCheckerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,10 @@ Route::post('domain/check', [DomainCheckerController::class, 'check']);
 Route::get('theme', [ThemeController::class, 'index']);
 
 
+Route::group(['prefix' => 'v1'], function(){
+    // For when user trys to create domain, user is not authenticated yet;
+    //    TODO: Remember to create another endpoint for storing payment data, when logged in
+    Route::get('/user/setup-intent', [StripeController::class, 'getSetupIntent']);
+    Route::post('/user/payments', [StripeController::class, 'postPaymentMethods']);
+    Route::post('/user/remove-payment', [StripeController::class, 'removePaymentMethod']);
+});

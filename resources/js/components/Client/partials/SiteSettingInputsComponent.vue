@@ -127,7 +127,6 @@ export default {
                 if (response) {
                     this.countries = response.data.data;
                     this.countryLoadingState = "Country/Region";
-                    this.fetchUserDetails();
                 }
                 // Send An email to the admin for a failed reverse request
             } catch (err) {

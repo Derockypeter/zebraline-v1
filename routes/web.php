@@ -4,8 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 
 
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\Tenant\ImageController;
 use App\Http\Controllers\Tenant\MetaSEOController;
+use App\Http\Controllers\Tenant\PaymentBillingAddressController;
+use App\Http\Controllers\Tenant\PaymentGatewayController;
 use App\Http\Controllers\Tenant\ProductController;
 use App\Http\Controllers\Tenant\SitedataController;
 
@@ -44,11 +47,11 @@ Route::get('/', function () {
 
 
 Route::get('/onboarding/choose-domain-n-email', function() {
-    return view('onboarding');
+    return view('client.onboarding');
 })->middleware(['auth']);
 
 Route::get('/client/dashboard', function () {
-    return view('dashboard');
+    return view('client.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/client/product', function () {
@@ -58,6 +61,10 @@ Route::get('/client/product', function () {
 Route::get('/client/design', function () {
     return view('client.design');
 })->middleware(['auth'])->name('client.design');
+
+Route::get('/client/payment', function () {
+    return view('client.payment');
+})->middleware(['auth'])->name('client.payment');
 
 
 Route::prefix('auth')->group(function () {
@@ -84,6 +91,19 @@ Route::post('/product', [ProductController::class, 'store']);
 Route::put('/product/{id}', [ProductController::class, 'update']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::post('/unlink_img', [ImageController::class, 'unlinkImage']);
+Route::post('/billing', [PaymentBillingAddressController::class, 'store']);
+
+Route::apiResource('/payment', PaymentGatewayController::class);
+ROute::post('/payment-default', [PaymentGatewayController::class, 'updateDefault']);
+
+
+Route::group(['prefix' => 'v1'], function(){
+    // For when user trys to create domain, user is not authenticated yet;
+    //    TODO: Remember to create another endpoint for storing payment data, when logged in
+    Route::get('/user/setup-intent', [StripeController::class, 'getSetupIntent'])->middleware('auth');
+    Route::post('/user/payments', [StripeController::class, 'postPaymentMethods'])->middleware('auth');
+    Route::post('/user/remove-payment', [StripeController::class, 'removePaymentMethod'])->middleware('auth');
+});
 
 
 

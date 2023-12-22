@@ -17,11 +17,11 @@
     </div>
 </template>
 <script>
-import BrandingComponent from './BrandingComponent.vue';
-import FontColorComponent from './FontColorComponent.vue';
-import NavbarComponent from './NavbarComponent.vue';
+import BrandingComponent from './partials/BrandingComponent.vue';
+import FontColorComponent from './partials/FontColorComponent.vue';
+import NavbarComponent from './partials/NavbarComponent.vue';
 import fetchData from "@/mixin/apiMixin";
-import SiteSettingInputsComponent from './SiteSettingInputsComponent.vue';
+import SiteSettingInputsComponent from './partials/SiteSettingInputsComponent.vue';
 
 export default {
     components: { NavbarComponent, FontColorComponent, BrandingComponent, SiteSettingInputsComponent },

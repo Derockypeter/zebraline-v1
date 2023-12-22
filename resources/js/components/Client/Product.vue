@@ -67,10 +67,10 @@
     }
 </style>
 <script>
-    import NavbarComponent from './NavbarComponent.vue';
+    import NavbarComponent from './partials/NavbarComponent.vue';
     import fetchData from "@/mixin/apiMixin";
     import priceMixin from "@/mixin/priceMixin";
-    import ProductFormComponent from './ProductFormComponent.vue';
+    import ProductFormComponent from './partials/ProductFormComponent.vue';
     export default {
         components: {NavbarComponent, ProductFormComponent},
         computed: {

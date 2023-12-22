@@ -36,6 +36,9 @@ app.component('design-component', DesignComponent);
 import ProductComponent from './components/Client/Product.vue';
 app.component('product-component', ProductComponent);
 
+import PaymentComponent from './components/Client/Payment.vue';
+app.component('payment-component', PaymentComponent);
+
 import Onboarding from './components/Onboarding/Onboarding.vue';
 app.component('onboarding-component', Onboarding);
 
