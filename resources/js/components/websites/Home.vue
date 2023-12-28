@@ -30,9 +30,9 @@
       :loggedIn="loggedIn"
       :blogs="blogs"
     />
-    <component :is="ReviewsComponent" v-if="reviews.length != 0"
+    <!-- <component :is="ReviewsComponent" v-if="reviews.length != 0"
       :reviews="reviews"
-    />
+    /> -->
     <component :is="OffersComponent"
       :loggedIn="loggedIn"
       @showOffersEditor="showOffersEditor($event)"
@@ -137,7 +137,7 @@ export default {
     },
     loadComponents() {
       // Dynamically import NavbarComponent based on templateId
-      import(`../templates/${this.storeTypeId}/template${this.navbarTemplateId}/NavbarComponent.vue`)
+      import(`../templates/template${this.navbarTemplateId}/NavbarComponent.vue`)
         .then(component => {
           this.NavbarComponent = markRaw(component.default || component);
         })
@@ -145,7 +145,7 @@ export default {
           // Handle import error
           console.error('Error loading NavbarComponent:', error);
         });
-      import(`../templates/${this.storeTypeId}/template${this.heroTemplateId}/HeroComponent.vue`)
+      import(`../templates/template${this.heroTemplateId}/HeroComponent.vue`)
         .then(component => {
           this.HeroComponent = markRaw(component.default || component);
         })
@@ -153,7 +153,7 @@ export default {
           // Handle import error
           console.error('Error loading HeroComponent:', error);
         });
-      import(`../templates/${this.storeTypeId}/template${this.categoryTemplateId}/CategoryComponent.vue`)
+      import(`../templates/template${this.categoryTemplateId}/CategoryComponent.vue`)
         .then(component => {
           this.CategoryComponent = markRaw(component.default || component);
         })
@@ -161,7 +161,7 @@ export default {
           // Handle import error
           console.error('Error loading CategoryComponent:', error);
         });
-      import(`../templates/${this.storeTypeId}/template${this.featuredPrdTemplateId}/FeaturedProductsComponent.vue`)
+      import(`../templates/template${this.featuredPrdTemplateId}/FeaturedProductsComponent.vue`)
         .then(component => {
           this.FeaturedProductsComponent = markRaw(component.default || component);
         })
@@ -169,7 +169,7 @@ export default {
           // Handle import error
           console.error('Error loading FeaturedProductsComponent:', error);
         });
-      import(`../templates/${this.storeTypeId}/template${this.blogTemplateId}/BlogComponent.vue`)
+      import(`../templates/template${this.blogTemplateId}/BlogComponent.vue`)
         .then(component => {
           this.BlogComponent = markRaw(component.default || component);
         })
@@ -177,7 +177,7 @@ export default {
           // Handle import error
           console.error('Error loading BlogComponent:', error);
         });
-      import(`../templates/${this.storeTypeId}/template${this.offerTemplateId}/OffersComponent.vue`)
+      import(`../templates/template${this.offerTemplateId}/OffersComponent.vue`)
         .then(component => {
           this.OffersComponent = markRaw(component.default || component);
         })
@@ -185,15 +185,15 @@ export default {
           // Handle import error
           console.error('Error loading OffersComponent:', error);
         });
-      import(`../templates/${this.storeTypeId}/template${this.reviewTemplateId}/ReviewsComponent.vue`)
-        .then(component => {
-          this.ReviewsComponent = markRaw(component.default || component);
-        })
-        .catch(error => {
-          // Handle import error
-          console.error('Error loading ReviewsComponent:', error);
-        });
-      import(`../templates/${this.storeTypeId}/template${this.sellingPointTemplateId}/SellingPointComponent.vue`)
+      // import(`../templates/template${this.reviewTemplateId}/ReviewsComponent.vue`)
+      //   .then(component => {
+      //     this.ReviewsComponent = markRaw(component.default || component);
+      //   })
+      //   .catch(error => {
+      //     // Handle import error
+      //     console.error('Error loading ReviewsComponent:', error);
+      //   });
+      import(`../templates/template${this.sellingPointTemplateId}/SellingPointComponent.vue`)
         .then(component => {
           this.SellingPointComponent = markRaw(component.default || component);
         })
@@ -201,7 +201,7 @@ export default {
           // Handle import error
           console.error('Error loading SellingPointComponent:', error);
         });
-      import(`../templates/${this.storeTypeId}/template${this.footerTemplateId}/FooterComponent.vue`)
+      import(`../templates/template${this.footerTemplateId}/FooterComponent.vue`)
         .then(component => {
           this.FooterComponent = markRaw(component.default || component);
         })

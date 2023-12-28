@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Tenant\SiteVisibility;
 use App\Models\Tenants\MetaSEO;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -184,10 +185,29 @@ class TenantController extends Controller
     // Renders / of template
     public function template(Request $request)
     {
+        $visibility = new SiteVisibility();
+        $visibilityCheck = $visibility->first();
+
+        $passwordRequired = true; // Logic to determine if password is required
+        $siteVisibility = "public";
+        if ($visibilityCheck !== null) {
+            $siteVisibility = $visibilityCheck->siteVisibility;
+            if ($siteVisibility !== 'password') {
+                $passwordRequired = false;
+            }
+        }
+        $storedPassword = session('guest_password');
+    
+        // Check if password is stored in the session
+        if ($passwordRequired && !$storedPassword) {
+            // Redirect back to password entry form if password is required but not stored
+            return redirect()->route('password.entry');
+        }
         // Get the template_id and get its details
         $tenancies = new Tenant();
         $tenant = $tenancies->find(tenant('id'));
         $templatesToRend = DB::table('components')->first();
+        
         $navbar_tempId = $templatesToRend->navbar_tempId;
         $hero_tempId = $templatesToRend->hero_tempId;
         $category_tempId = $templatesToRend->category_tempId;
@@ -209,7 +229,7 @@ class TenantController extends Controller
         }
         // // Checks if  a user is subscribed
         // $userSubscribed = $tenant->user->subscribed('premium');
-        return view('websites.renderer', compact('review_tempId', 'footer_tempId', 'sellin_point_tempId', 'offer_tempId', 'hero_tempId', 'category_tempId', 'featured_tempId', 'blog_tempId', 'navbar_tempId', 'email', 'storeTypeId')); // , 'metaData'
+        return view('websites.renderer', compact('siteVisibility', 'review_tempId', 'footer_tempId', 'sellin_point_tempId', 'offer_tempId', 'hero_tempId', 'category_tempId', 'featured_tempId', 'blog_tempId', 'navbar_tempId', 'email', 'storeTypeId')); // , 'metaData'
 
     }
 

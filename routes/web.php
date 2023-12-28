@@ -1,16 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\PageController;
 
 
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\Tenant\ImageController;
 use App\Http\Controllers\Tenant\MetaSEOController;
-use App\Http\Controllers\Tenant\PaymentBillingAddressController;
-use App\Http\Controllers\Tenant\PaymentGatewayController;
 use App\Http\Controllers\Tenant\ProductController;
 use App\Http\Controllers\Tenant\SitedataController;
+use App\Http\Controllers\Tenant\PaymentGatewayController;
+use App\Http\Controllers\Tenant\SiteVisibilityController;
+use App\Http\Controllers\Tenant\PaymentBillingAddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +88,11 @@ Route::post('font_color', [SiteDataController::class, 'storeFontColor']);
 Route::post('favicon_logo', [SiteDataController::class, 'storeFaviconLogo']);
 Route::post('other_settings', [SiteDataController::class, 'storeOthers']);
 Route::post('meta_data', [MetaSEOController::class, 'store']);
+Route::post('site_visibility', [SiteVisibilityController::class, 'storeOrUpdate']);
+
+
+
+
 
 Route::post('/product', [ProductController::class, 'store']);
 Route::put('/product/{id}', [ProductController::class, 'update']);

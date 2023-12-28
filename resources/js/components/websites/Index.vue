@@ -10,8 +10,8 @@
             </div>
         </div>
         <div v-show="!fetching">
-            <div class="row" v-if="canEdit">
-                <div class="col s2 l3 m4 edits">
+            <!-- <div class="row" v-if="canEdit"> -->
+                <!-- <div class="col s2 l3 m4 edits"> -->
                     <!-- <SideNav
                         :onEditNavMenu="editNavMenu"
                         :onEditHeroSection="editHeroSection"
@@ -51,8 +51,8 @@
                         :isUserSubscribed="localisSub"
                         :meta="meta"
                     /> -->
-                </div>
-                <div class="col s10 l9 m8 main" @click="checkIfLoggedIn">
+                <!-- </div> -->
+                <div class="col s12 l12 m12 main" @click="checkIfLoggedIn">
                     <!-- <PublishHeadComponent :brandname="brandname" :user="user" @isSubscribed="isSubscribed"/> -->
                     <HomeComponent
                         :brandname="brandname"
@@ -94,9 +94,9 @@
                         :storeTypeId="storeTypeId"
                     />
                 </div>
-            </div>
-            <!-- <div v-show="!canEdit">
-                <RouterView
+            <!-- </div> -->
+            <!-- <div v-show="!canEdit"> -->
+                <!-- <RouterView
                     :brandname="brandname"
                     :hero="hero"
                     :themecolor="themecolor"
@@ -119,8 +119,8 @@
                     :sellingPointTemplateId="sellingPointTemplateId"
                     :footerTemplateId="footerTemplateId"
                     :storeTypeId="storeTypeId"
-                />
-            </div> -->
+                /> -->
+            <!-- </div> -->
         </div>
         <!-- <div id="signinmodal" class="modal">
             <SignupComponent />
@@ -520,7 +520,7 @@
         height: 100vh;
     }
     .main {
-        margin-left: 25% !important;
+        /* margin-left: 25% !important; */
     }
     .loader-container {
         position: relative;

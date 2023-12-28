@@ -7,25 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <meta name="robots" content="all">
-    <title>{{ $metaData->title ?? $brand_name ?? 'Preview' }}</title>
-    <!-- SEO -->
-    <meta name="keywords" content="{{('Brand Website of '.($brand_name ?? 'Preview') )}}">
-    <meta name="description" content="{{ $metaData->description ?? 'This is a description of what our brand is about and what we do' }}">
-    <!-- Open Graph -->
-    <meta property="og:title" content="{{ $metaData->title ?? 'This is a description of what our brand is about and what we do' }}">
-    <meta property="og:url" content="{{ url()->full() }}">
-    <meta property="og:type" content="website">
-    <meta property="og:description" content="{{ $metaData->description ?? 'This is a description of what our brand is about and what we do' }}">
-    <meta property="og:image" content="{{ url($metaData->image ?? '')  }}" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta content="{{ ('An image of '. ($brand_name ?? 'Preview') ) }}" property="og:image:alt">
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{{ $metaData->title ?? 'This is a title of what our brand is about and what we do' }}" />
-    <meta name="twitter:description" content="{{ $metaData->description ?? 'This is a description of what our brand is about and what we do' }}" />
-    <meta name="twitter:url" content="{{ url()->full() }}" />
-    <meta name="twitter:image" content="{{ url($metaData->image ?? '') }}" />
+    <title>Password to continue</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -39,12 +21,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    <div id="app" data-renederer-prop="{{$storeTypeId}}">
-        <renderer-website-component branddesc="{{$brandDesc ?? ''}}"  email="{{$email}}" metaData="{{$metaData ?? ''}}" footerTempId="{{$footer_tempId}}" 
-            navbarTempId="{{$navbar_tempId}}" heroTempId="{{$hero_tempId}}" categoryTempId="{{$category_tempId}}" featuredPrdTempId="{{$featured_tempId}}"
-            blogTempId="{{$blog_tempId}}" offerTempId="{{$offer_tempId}}" sellingpointTempId="{{$sellin_point_tempId}}" reviewTempId="{{$review_tempId}}"
-            storetypeId="{{$storeTypeId}}" themecolor="{{$theme_color ?? ''}}" brandName="{{$brand_name ?? ''}}" siteVisibility="{{$siteVisibility}}">
-        </renderer-website-component>
+    <div class=container>
+        <p>To access the content of this site, a password is required</p>
+        <small>Please enter paassword to continue</small>
+        <form method="POST" action="{{ route('password.check') }}">
+            @csrf
+            <label for="password">Enter Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit" class="btn indigo darken-3">Submit</button>
+        </form>
     </div>
     @vite('resources/js/app.js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

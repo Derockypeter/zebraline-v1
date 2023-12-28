@@ -5,7 +5,7 @@
     </div>
 </template>
 <script>
-import NavbarComponent from '../templates/1/template1/NavbarComponent.vue';
+import NavbarComponent from '../templates/template1/NavbarComponent.vue';
 export default {
     components: { NavbarComponent },
     mounted() {

@@ -7,6 +7,7 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import router from './router';
 import { defineAsyncComponent } from "vue";
 
 /**
@@ -44,10 +45,10 @@ app.component('onboarding-component', Onboarding);
 
 let checkTenantRenderer = document.getElementById('app').getAttribute('data-renederer-prop');
 if (checkTenantRenderer !== null) {
-    app.component(`renderer-website-component`, defineAsyncComponent(() => import(`./components/Websites/Index.vue`)));
+    app.component(`renderer-website-component`, defineAsyncComponent(() => import(`./components/websites/Index.vue`)));
     const pinia = createPinia();
     app.use(pinia)
-    // app.use(router);
+    app.use(router);
     // app.use(metaManager)
     // app.use(metaPlugin)
 }
